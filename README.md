@@ -1,45 +1,57 @@
-# Datarooms
+# MetaCRDT / Datarooms
 
-> Local-first apps. Any domain. Same patterns.
+> Research Preview
 
-A reference architecture for building offline-capable, sync-ready applications using LiveStore, Effect, and React.
+A substrate for structured coordination, local-first computation, and human-to-agent symbiotic interface.
 
-## What's Here
+---
 
-```
-ARCHITECTURE.md        # How the stack works
-ARCHITECTURE_MULTI.md  # Multi-app from one repo
-VIBES.md               # Philosophy and quick-start
+## Why MetaCRDT?
 
-domains/
-- meta.md            # Primitive vocabulary
-- cheffect.md        # Recipe tracker (active)
-- spice.md           # Couples prompts
-- ember.md           # Gratitude journal
-- witness.md         # Handshake protocol
-- fable.md           # Fiction engine
+MetaCRDT is a unified lattice of Conflict-Free Replicated Data-Types (CRDTs), a typed task/agent model, and a local-first execution kernel. Together, these primitives let us express arbitrarily rich workflows—from compliance data-rooms to generative group games—while preserving:
 
-src/                   # Cheffect implementation
-```
+| Principle | Description |
+|-----------|-------------|
+| **State Convergence** | Strong eventual consistency across arbitrary network partitions |
+| **Auditability** | Verifiable provenance and cryptographic time-stamping of every mutation |
+| **Composability** | Typed schemas that compile to SQLite, Postgres, and Cloudflare Durable Objects |
+| **Agent-Native Semantics** | Deterministic slots where LLM agents can observe, propose, and merge changes alongside humans |
 
-## The Stack
+---
 
-| Layer | Tool |
-|-------|------|
-| Data | LiveStore (SQLite + event sourcing) |
-| Logic | Effect (type-safe services) |
-| State | Atoms (reactive queries) |
-| UI | React + TanStack Router |
-| Style | Tailwind + Shadcn |
-| AI | Effect AI + OpenAI |
-
-## The Pattern
+## Architectural Stack
 
 ```
-User action � commit(event) � Materializer � SQLite � Atom � UI
+┌─────────────────────────────────────────────────────────────┐
+│  Type Generation Pipeline                                   │
+│  @effect/schema → TypeScript, JSON Schema, SQL DDL, OpenAPI │
+├─────────────────────────────────────────────────────────────┤
+│  Transport Adapters                                         │
+│  WebSocket · Durable Objects · SSE · p2p WebRTC             │
+├─────────────────────────────────────────────────────────────┤
+│  Agent Interface Layer                                      │
+│  Event Log → Embedding Cache → Reflection → Merge Proposals │
+├─────────────────────────────────────────────────────────────┤
+│  CRDT Kernel                                                │
+│  Op-based, delta-encoded (G-Counter, MV-Register, LWW-Set)  │
+├─────────────────────────────────────────────────────────────┤
+│  Effect-Core Runtime                                        │
+│  Pure functional, interruptible fibers, deterministic compute│
+└─────────────────────────────────────────────────────────────┘
 ```
 
-Events are truth. Tables are views. Works offline. Syncs when connected.
+---
+
+## Research Domains
+
+| Domain | Focus |
+|--------|-------|
+| **datarooms** | Structured workspaces for compliance, onboarding, and regulated operations |
+| **groupchat** | Conversation graphs that treat every message as a first-class CRDT node |
+| **rabbithole** | Exploratory knowledge mining—LLM agents recursively traverse data-rooms |
+| **threadquest** | Procedural narrative systems where an AI DM orchestrates branching story graphs |
+
+---
 
 ## Quick Start
 
@@ -48,29 +60,32 @@ pnpm install
 pnpm dev
 ```
 
-## Domains
+---
 
-Each domain spec defines entities, events, features, and constraints:
+## Documentation
 
-- **Cheffect** - Recipe tracking with AI extraction
-- **Spice** - Weekly intimacy prompts for couples
-- **Ember** - Shared gratitude journal (E2E encrypted)
-- **Witness** - Auditable handshake protocol
-- **Fable** - Federated fiction engine
+- [ARCHITECTURE.md](./ARCHITECTURE.md) — Technical patterns and LiveStore integration
+- [ARCHITECTURE_MULTI.md](./ARCHITECTURE_MULTI.md) — Multi-domain setup from one repo
+- [VISION.md](./VISION.md) — Research programme and roadmap
+- [PROMPT.md](./PROMPT.md) — Generate new domain specs with AI agents
+- [domains/](./domains/) — Domain specifications (cheffect, spice, ember, witness, fable)
+
+---
 
 ## Primitives
 
-Base: Entity, Event, Materializer, Atom, Capability
+**Base**: Entity, Event, Materializer, Atom, Capability
 
-Composite (from `domains/meta.md`):
-- **Channel** - Multi-party scope
-- **AuditChain** - Hash-linked integrity
-- **EncryptedPayload** - E2E encryption
-- **Federation** - Cross-server linking
+**Composite** (from `domains/meta.md`):
+- **Channel** — Multi-party scope with role-based access
+- **AuditChain** — Hash-linked tamper-evident history
+- **EncryptedPayload** — E2E encryption with key exchange
+- **Federation** — Cross-server linking with signature verification
 
-## Docs
+---
 
-- [VIBES.md](./VIBES.md) - Philosophy
-- [ARCHITECTURE.md](./ARCHITECTURE.md) - Technical patterns
-- [ARCHITECTURE_MULTI.md](./ARCHITECTURE_MULTI.md) - Multi-domain setup
-- [domains/](./domains/) - Domain specifications
+## Participate
+
+MetaCRDT is an open, evolving substrate; each sub-domain is a living laboratory.
+
+If your work demands structured coordination under real-world network conditions, we invite you to build with us.

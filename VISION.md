@@ -1,74 +1,90 @@
-# Datarooms Vision
+# MetaCRDT Vision
 
-> What if building apps felt like writing a spec?
+> A substrate for structured coordination, local-first computation, and human-to-agent symbiosis.
 
 ---
 
-## The Dream
+## The Thesis
 
-You have an idea for an app. You write a simple markdown file:
+Modern applications demand properties that traditional architectures cannot provide: offline resilience, cryptographic auditability, agent-native interfaces, and seamless federation across organizational boundaries.
 
-```markdown
-# MyApp
+MetaCRDT unifies these requirements into a single coherent substrate—a typed lattice where every mutation is an immutable event, every state converges deterministically, and every agent (human or AI) operates through the same merge semantics.
 
-> One-line description
+---
 
-## Entities
-- **Thing**: id, name, createdAt
+## Core Principles
 
-## Events
-- ThingCreated, ThingUpdated, ThingDeleted
+### State Convergence
+Strong eventual consistency across arbitrary network partitions. No coordination required—peers sync when connected, diverge when offline, and converge automatically upon reconnection.
 
-## Features
-- [ ] Create things
-- [ ] List things
-- [ ] Delete things
+### Auditability
+Every mutation carries verifiable provenance. Cryptographic timestamps and hash-linked event chains provide tamper-evident history without centralized trust.
+
+### Composability
+Typed schemas compile to multiple targets: SQLite for local persistence, Postgres for server-side state, Cloudflare Durable Objects for edge compute. One schema, many backends.
+
+### Agent-Native Semantics
+Deterministic slots where LLM agents can observe state, propose changes, and merge alongside humans. The same merge semantics that resolve human conflicts resolve agent conflicts.
+
+---
+
+## Research Programmes
+
+### datarooms.metacrdt.com
+Structured workspaces for compliance, onboarding, and regulated operations. Every document version tracked, every access logged, every signature verifiable.
+
+### groupchat.metacrdt.com
+Conversation graphs that treat every message as a first-class CRDT node. Threads, reactions, and edits all converge—no "someone else is typing" race conditions.
+
+### rabbithole.metacrdt.com
+Exploratory knowledge mining. LLM agents recursively traverse data-rooms to surface latent structure, connections, and contradictions.
+
+### threadquest.metacrdt.com
+Procedural narrative systems where an AI Dungeon Master orchestrates branching story graphs in group chat. Script-first narration with AI filling the gaps.
+
+---
+
+## Architectural Stack
+
 ```
+Type Generation Pipeline
+  └─ @effect/schema → TypeScript types, JSON Schema, SQL DDL, OpenAPI
 
-You hand it to an agent. The agent reads ARCHITECTURE.md, understands the patterns, and builds your app. Schema, events, materializers, atoms, routes, components—all of it.
+Transport Adapters
+  └─ WebSocket, Durable Objects, Server-Sent Events, p2p WebRTC
 
-Works offline. Syncs across devices. Deploys to the edge.
+Agent Interface Layer
+  └─ Canonical event log → embedding cache → reflection prompts → merge-proposal objects
 
-You didn't write a line of code. You described what you wanted.
+CRDT Kernel
+  └─ Op-based, delta-encoded structures (G-Counter, MV-Register, LWW-Set, custom λ-CRDTs)
+
+Effect-Core Runtime
+  └─ Pure functional, interruptible fibers scheduling deterministic computations
+```
 
 ---
 
 ## The Primitives
 
-Like LEGO bricks, domains compose from primitives:
+Like LEGO bricks, domains compose from typed primitives:
 
 **Base**
-- Entity (data with identity)
-- Event (immutable fact)
-- Materializer (event → state)
-- Atom (reactive query)
-- Capability (AI transformation)
+- **Entity** — Data with identity, timestamps, soft-delete
+- **Event** — Immutable fact, synced or local-only
+- **Materializer** — Event → State projection
+- **Atom** — Reactive query with automatic dependency tracking
+- **Capability** — AI transformation slot (extraction, generation, validation)
 
 **Composite**
-- Channel (multi-party scope)
-- AuditChain (tamper-evident history)
-- EncryptedPayload (E2E privacy)
-- Federation (cross-server portability)
+- **Channel** — Multi-party scope with role-based access control
+- **AuditChain** — Hash-linked tamper-evident history with optional signatures
+- **EncryptedPayload** — E2E encryption with key exchange protocol
+- **Federation** — Cross-server linking with signature verification
 
-A solo app uses Entity + Event. A couples app adds Channel. A trust-critical app adds AuditChain. A privacy-critical app adds EncryptedPayload. A federated app adds Federation.
+A solo app uses Entity + Event. A compliance app adds AuditChain. A privacy app adds EncryptedPayload. A decentralized app adds Federation.
 
 Same foundation. Infinite combinations.
-
----
-
-## The Multiverse
-
-Each domain is a universe. But they share DNA:
-
-- **Cheffect** - Your recipes, your way, offline
-- **Spice** - Intimacy prompts for two, consent-first
-- **Ember** - Gratitude journal, encrypted, revealed together
-- **Witness** - "I lent you $50" signed by both parties
-- **Fable** - Collaborative fiction, AI narration, federated
-
-One repo. One stack. Many apps. Deploy independently.
-
-When you're ready to build the next domain, you don't start from scratch. You compose from what exists.
 
 ---
 
@@ -81,54 +97,53 @@ When you're ready to build the next domain, you don't start from scratch. You co
 4. Agent generates routes, components
 5. Human reviews, iterates
 6. Ship
-```
 
-The human's job: Define WHAT.
-The agent's job: Figure out WHERE and HOW.
-The architecture's job: Make it all work.
+The human's job: Define WHAT
+The agent's job: Figure out WHERE and HOW
+The architecture's job: Make it all converge
+```
 
 ---
 
-## What Exists Today
+## Current State
 
-- [x] ARCHITECTURE.md documenting patterns
-- [x] domains/meta.md defining primitives
-- [x] 5 domain specs (cheffect, spice, ember, witness, fable)
-- [x] ARCHITECTURE_MULTI.md for multi-domain setup
-- [x] Cheffect implementation (working app)
+**Implemented:**
+- [x] Effect-Core runtime with LiveStore integration
+- [x] CRDT-backed schema with event sourcing
+- [x] Multi-domain architecture (single repo, independent deploys)
+- [x] Cheffect reference implementation
+- [x] Domain spec format and generator prompt
 
-## What's Next
-
-- [ ] Implement primitives as composable schema factories
-- [ ] Build second domain (Ember or Witness)
-- [ ] Agent that reads spec → generates code
-- [ ] Federation protocol between deployed apps
-- [ ] Community-contributed domains
+**In Progress:**
+- [ ] Composable primitive factories
+- [ ] Agent interface layer
+- [ ] Federation protocol
+- [ ] Additional domain implementations
 
 ---
 
 ## The Ethos
 
-**Local-first is a superpower.** Your app works on a plane, in a subway, in a basement. Users don't wait for your server.
+**Local-first is non-negotiable.** Your app works on a plane, in a subway, in a basement. Users don't wait for servers.
 
-**Events are truth.** Never mutate directly. Commit events. Get sync, undo, and audit for free.
+**Events are truth.** Never mutate directly. Commit events. Get sync, undo, audit, and time-travel for free.
 
-**AI enhances, doesn't replace.** Use AI for structured extraction (URL → Recipe), not chat interfaces. Schema-driven, predictable, useful.
+**Agents are peers.** LLMs observe and propose through the same merge semantics as humans. No special APIs—just typed events and convergent state.
 
-**Ship fast, polish later.** The architecture handles the hard parts. You focus on your domain.
-
-**Specs over code.** The best code is the code you didn't write. Define what you want. Let the machine figure out the rest.
+**Specs over code.** The best code is the code you didn't write. Define what you want. Let the substrate figure out the rest.
 
 ---
 
-## Join Us
+## Participate
 
-This is an experiment in building apps differently:
-- Offline-first by default
-- Event-sourced by design
-- AI-assisted by choice
-- Federated by nature
+MetaCRDT is an open, evolving substrate. Each sub-domain is a living laboratory.
 
-The patterns are proven. The stack is solid. Your idea is the only variable.
+- **Read the Docs** — Deep-dive on schema design, agent slots, and formal proofs
+- **Join the Alpha** — Access reference implementations and private registries
+- **Propose a Lab** — Submit an abstract describing how MetaCRDT primitives unlock your domain
 
-What will you build?
+If your work demands structured coordination under real-world network conditions, we invite you to build with us.
+
+---
+
+*What will you converge?*

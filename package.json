@@ -4,9 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "APP=cheffect vite",
+    "dev:cheffect": "APP=cheffect vite",
+    "build": "APP=cheffect vite build",
+    "build:cheffect": "APP=cheffect vite build",
+    "preview": "APP=cheffect vite preview"
   },
   "dependencies": {
     "@effect-atom/atom-livestore": "^0.4.0",

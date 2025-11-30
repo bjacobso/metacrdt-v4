@@ -36,8 +36,10 @@
 
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@shared/*": ["./src/_shared/*"],
+      "@app/*": ["./src/apps/cheffect/*"]
     }
   },
-  "include": ["src", "domain"]
+  "include": ["src", "domains"]
 }

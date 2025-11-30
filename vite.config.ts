@@ -6,13 +6,20 @@ import { TanStackRouterVite } from "@tanstack/router-plugin/vite"
 import tailwindcss from "@tailwindcss/vite"
 import { livestoreDevtoolsPlugin } from "@livestore/devtools-vite"
 
+const APP = process.env.APP || "cheffect"
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    TanStackRouterVite(),
+    TanStackRouterVite({
+      routesDirectory: `src/apps/${APP}/routes`,
+      generatedRouteTree: `src/apps/${APP}/routeTree.gen.ts`,
+    }),
     react(),
     tailwindcss(),
-    livestoreDevtoolsPlugin({ schemaPath: "./src/livestore/schema.ts" }),
+    livestoreDevtoolsPlugin({
+      schemaPath: `./src/apps/${APP}/livestore/schema.ts`,
+    }),
     VitePWA({
       registerType: "autoUpdate",
       injectRegister: "auto",
@@ -23,10 +30,10 @@ export default defineConfig({
       },
 
       manifest: {
-        id: "cheffect.effect.website",
-        name: "Cheffect",
-        short_name: "Cheffect",
-        description: "A local-first meal planner app",
+        id: `${APP}.datarooms.dev`,
+        name: APP.charAt(0).toUpperCase() + APP.slice(1),
+        short_name: APP.charAt(0).toUpperCase() + APP.slice(1),
+        description: `A local-first ${APP} app`,
         theme_color: "#0d5257",
         background_color: "#0d5257",
         shortcuts: [],
@@ -57,10 +64,13 @@ export default defineConfig({
       compress: false,
       mangle: false,
     },
+    outDir: `dist/${APP}`,
   },
 
   resolve: {
     alias: {
+      "@shared": path.resolve(__dirname, "src/_shared"),
+      "@app": path.resolve(__dirname, `src/apps/${APP}`),
       "@": path.resolve(__dirname, "src"),
     },
   },
