@@ -1,4 +1,4 @@
-# Vibes
+# Datarooms
 
 > Local-first apps. Any domain. Same patterns.
 

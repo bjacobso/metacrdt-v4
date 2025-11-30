@@ -1,5 +1,5 @@
 {
-  "name": "cheffect",
+  "name": "@metacrdt/datarooms",
   "private": true,
   "version": "0.0.0",
   "type": "module",

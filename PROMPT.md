@@ -6,7 +6,7 @@
 
 ## Instructions
 
-I want you to help me design a domain spec for a local-first application. I'll describe my app idea, and you'll output a structured markdown file following this exact format.
+I want you to help me design a domain spec for a local-first application using the Datarooms architecture. I'll describe my app idea, and you'll output a structured markdown file following this exact format.
 
 ## Context
 
